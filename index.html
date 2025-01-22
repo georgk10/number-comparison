@@ -33,6 +33,8 @@
       name="keywords"
       content="compare,numbers,scaling,visualization,github pages"
     />
+    <!-- Add html2canvas library -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.3.2/dist/html2canvas.min.js"></script>
   </head>
   <body>
     <h1>Compare Two Numbers Visually</h1>
@@ -51,6 +53,8 @@
       <input type="number" id="smallerNumber" value="10" />
 
       <button id="compareBtn">Compare</button>
+      <!-- Add button to save page as image -->
+      <button id="saveAsImageBtn">Save Page as Image</button>
     </div>
 
     <p id="infoMsg" style="font-style: italic; color: blue"></p>
@@ -64,6 +68,7 @@
       const smallerNumberInput = document.getElementById("smallerNumber");
       const squareContainer = document.getElementById("square-container");
       const infoMsg = document.getElementById("infoMsg");
+      const saveAsImageBtn = document.getElementById("saveAsImageBtn");
 
       // Each square is about 4x4px area (2px + 1px border on each side for width, similarly for height)
       // We'll approximate each square's total area as 16px^2 for a rough screen-fit calculation
@@ -145,6 +150,15 @@
 
           squareContainer.appendChild(square);
         }
+      });
+
+      saveAsImageBtn.addEventListener("click", () => {
+        html2canvas(document.body).then((canvas) => {
+          const link = document.createElement("a");
+          link.href = canvas.toDataURL("image/png");
+          link.download = "number_comparison.png";
+          link.click();
+        });
       });
     </script>
   </body>
